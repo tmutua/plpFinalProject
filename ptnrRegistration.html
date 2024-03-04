@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Registration Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="container">
+  <div class="top-bar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="hospital-name">
+        <h5>Hospital Name</h5>
+      </div>
+      <div class="room-indicator">
+        <h6>Room: Registration</h6> <!-- Change "XYZ" with the room name/number -->
+      </div>
+      <div class="queue-button">
+        <button class="btn btn-light">Queue</button>
+      </div>
+    </div>
+  </div>
+    <div class="search-container">
+        <input type="search" class="form-control search-input" id="searchInput" placeholder="Search Patient Name">
+        <i class="fas fa-search search-icon"></i> <!-- Assuming you're using Font Awesome for icons -->
+      </div>
+    <form id="registrationForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="surname">Surname:</label>
+            <input type="text" class="form-control" id="surname" name="surname">
+          </div>
+          <div class="form-group">
+            <label for="otherNames">Other Names:</label>
+            <input type="text" class="form-control" id="otherNames" name="otherNames">
+          </div>
+          <div class="form-group">
+            <label for="sex">Sex:</label>
+            <select class="form-control" id="sex" name="sex">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <div class="input-group">
+              <input type="date" class="form-control" id="dob" name="dob">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="ageInputButton">Add Age</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="idNumber">ID Number:</label>
+            <input type="number" class="form-control" id="idNumber" name="idNumber">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="telephone">Telephone:</label>
+            <input type="tel" class="form-control" id="telephone" name="telephone">
+          </div>
+          <div class="form-group">
+            <label for="residence">Residence:</label>
+            <input type="text" class="form-control" id="residence" name="residence">
+          </div>
+          <div class="form-group">
+            <label for="nextOfKin">Next of Kin:</label>
+            <input type="text" class="form-control" id="nextOfKin" name="nextOfKin">
+          </div>
+          <div class="form-group">
+            <label for="relationship">Relationship:</label>
+            <input type="text" class="form-control" id="relationship" name="relationship">
+          </div>
+          <div class="form-group">
+            <label for="nextOfKinContact">Next of Kin Contact:</label>
+            <input type="tel" class="form-control" id="nextOfKinContact" name="nextOfKinContact">
+          </div>
+          <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal fade" id="ageInputModal" tabindex="-1" role="dialog" aria-labelledby="ageInputModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ageInputModalLabel">Add Age</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="years">Years:</label>
+            <input type="number" class="form-control" id="years">
+          </div>
+          <div class="form-group">
+            <label for="months">Months:</label>
+            <input type="number" class="form-control" id="months">
+          </div>
+          <div class="form-group">
+            <label for="weeks">Weeks:</label>
+            <input type="number" class="form-control" id="weeks">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="calculateDateOfBirth">Calculate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Bootstrap JS CDN -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="emr.js"></script>
+  <!-- Firebase JS CDN     -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
+
+  <script>
+    var firebaseConfig = {
+    apiKey: "AIzaSyDIJqCoHSGaK4jnTcDU70_1cNEIGkE3Mtc",
+    authDomain: "teemedicare.firebaseapp.com",
+    databaseURL: "https://teemedicare-default-rtdb.firebaseio.com",
+    projectId: "teemedicare",
+    storageBucket: "teemedicare.appspot.com",
+    messagingSenderId: "497099613313",
+    appId: "1:497099613313:web:190628e8e0b777e9d95980"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script src="database.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* PATIENT REGISTRATION */
+.top-bar {
+    background-color: #73879c; /* Adjust color as needed */
+    color: #fff;
+    padding: 10px 0;
+  }
+  .hospital-name {
+    margin-left: 20px;
+  }
+  .room-indicator {
+    flex: 1;
+    text-align: center;
+  }
+  .queue-button {
+    margin-right: 20px;
+  }
+  .search-container {
+    text-align: center;
+    margin-top: 50px; /* Adjust as needed */
+  }
+  .search-input {
+    width: 500px; /* Adjust width as needed */
+    padding: 10px 35px 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #ced4da;
+    outline: none;
+  }
+  .search-icon {
+    position: relative;
+    left: -30px;
+    top: 2px;
+    color: #aaa;
+  }
+
+  /* BILLING */
+  .row input{
+    color: #333;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0;
+}
+select{
+    width:300px;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+}
+select::-ms-expand{
+    display: none;
+}
+.col{
+border-right: 1px solid #808488;
+}
+.col:last-child{
+border-right: none;
+}
+label{
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+    padding: 5px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th {
+    background-color: #f2f2f2;
+}
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+#invoiceButton{
+display: none;
+}
+.mobilePay{
+    display: none;
+}
