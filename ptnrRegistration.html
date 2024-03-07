@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+
 </head>
 <body class="container">
   <div class="top-bar">
@@ -22,24 +26,27 @@
       </div>
     </div>
   </div>
-    <div class="search-container">
-        <input type="search" class="form-control search-input" id="searchInput" placeholder="Search Patient Name">
-        <i class="fas fa-search search-icon"></i> <!-- Assuming you're using Font Awesome for icons -->
+      <div class="search-container">
+        <div class="input-group mb-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search by name, ID number, or telephone">
+          <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
+        </div>
       </div>
+      <div id="suggestions"></div>
     <form id="registrationForm">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
             <label for="surname">Surname:</label>
-            <input type="text" class="form-control" id="surname" name="surname">
+            <input type="text" class="form-control" id="surname" name="surname" required>
           </div>
           <div class="form-group">
             <label for="otherNames">Other Names:</label>
-            <input type="text" class="form-control" id="otherNames" name="otherNames">
+            <input type="text" class="form-control" id="otherNames" name="otherNames" required>
           </div>
           <div class="form-group">
             <label for="sex">Sex:</label>
-            <select class="form-control" id="sex" name="sex">
+            <select class="form-control" id="sex" name="sex" required>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
@@ -48,7 +55,7 @@
           <div class="form-group">
             <label for="dob">Date of Birth:</label>
             <div class="input-group">
-              <input type="date" class="form-control" id="dob" name="dob">
+              <input type="date" class="form-control" id="dob" name="dob" required>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="ageInputButton">Add Age</button>
               </div>
@@ -66,11 +73,11 @@
           </div>
           <div class="form-group">
             <label for="residence">Residence:</label>
-            <input type="text" class="form-control" id="residence" name="residence">
+            <input type="text" class="form-control" id="residence" name="residence" required>
           </div>
           <div class="form-group">
             <label for="nextOfKin">Next of Kin:</label>
-            <input type="text" class="form-control" id="nextOfKin" name="nextOfKin">
+            <input type="text" class="form-control" id="nextOfKin" name="nextOfKin" required>
           </div>
           <div class="form-group">
             <label for="relationship">Relationship:</label>
@@ -110,7 +117,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="calculateDateOfBirth">Calculate</button>
+          <button type="button" class="btn btn-primary" id="calculateDateOfBirth">Add</button>
         </div>
       </div>
     </div>
@@ -120,24 +127,6 @@
   <!-- Bootstrap JS CDN -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="emr.js"></script>
-  <!-- Firebase JS CDN     -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
-
-  <script>
-    var firebaseConfig = {
-    apiKey: "AIzaSyDIJqCoHSGaK4jnTcDU70_1cNEIGkE3Mtc",
-    authDomain: "teemedicare.firebaseapp.com",
-    databaseURL: "https://teemedicare-default-rtdb.firebaseio.com",
-    projectId: "teemedicare",
-    storageBucket: "teemedicare.appspot.com",
-    messagingSenderId: "497099613313",
-    appId: "1:497099613313:web:190628e8e0b777e9d95980"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  </script>
-
   <script src="database.js"></script>
 
 </body>
