@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    input[type="date"] {
+      width: calc(100% - 10px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tbody tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    input[readonly] {
+      background-color: #f9f9f9;
+    }
+  </style>
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Products</h1>
+    <label for="productName">Name:</label>
+    <input type="text" id="productName">
+    <label for="category">Category:</label>
+    <select id="category">
+      <option value="pharmacy">Pharmacy Drugs</option>
+      <option value="non-pharmaceutical">Non-Pharmaceutical Item</option>
+    </select>
+    <label for="class">Class:</label>
+    <select id="class">
+      <option value="service">Service</option>
+      <option value="product">Product</option>
+    </select>
+    <label for="unitPrice">Unit Price:</label>
+    <input type="number" id="unitPrice">
+    <label for="expiryDate">Expiry Date:</label>
+    <input type="date" id="expiryDate">
+    <button onclick="addProduct()">Add Product</button>
+    <button onclick="updateProduct()">Update Product</button>
+    <button onclick="clearInputs()">Clear</button>
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Class</th>
+          <th>Unit Price</th>
+          <th>Expiry Date</th>
+        </tr>
+      </thead>
+      <tbody id="productBody">
+      </tbody>
+    </table>
+  </div>
+
+  
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJBNgYDCJoOY3cOLUUK7JWNf-dx1_B3vY",
+        authDomain: "teetech-67c26.firebaseapp.com",
+        databaseURL: "https://teetech-67c26-default-rtdb.firebaseio.com",
+        projectId: "teetech-67c26",
+        storageBucket: "teetech-67c26.appspot.com",
+        messagingSenderId: "307099503704",
+        appId: "1:307099503704:web:f31cddc061f3fbfc598e2d"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+    const productRef = database.ref('products');
+
+    // Keep track of the last used product ID
+    let lastProductId = 0;
+
+    // Function to add a product
+    function addProduct() {
+      const productName = document.getElementById('productName').value;
+      const category = document.getElementById('category').value;
+      const productClass = document.getElementById('class').value;
+      const unitPrice = document.getElementById('unitPrice').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+
+      if (productName && category && productClass && unitPrice && expiryDate) {
+        // Increment the last used product ID
+        lastProductId++;
+
+        const newProduct = {
+          productId: lastProductId,
+          productName: productName,
+          category: category,
+          class: productClass,
+          unitPrice: unitPrice,
+          expiryDate: expiryDate
+        };
+
+        productRef.push(newProduct); // Add product to Firebase
+
+        clearInputs();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    // Function to update a product
+    function updateProduct() {
+
+      const productName = document.getElementById('productName').value;
+      const category = document.getElementById('category').value;
+      const productClass = document.getElementById('class').value;
+      const unitPrice = document.getElementById('unitPrice').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+
+      if (productId && productName && category && productClass && unitPrice && expiryDate) {
+        const updatedProduct = {
+          productId: productId,
+          productName: productName,
+          category: category,
+          class: productClass,
+          unitPrice: unitPrice,
+          expiryDate: expiryDate
+        };
+
+        productRef.child(productId).set(updatedProduct); // Update product in Firebase
+
+        clearInputs();
+      } else {
+        alert('Please select a product from the table and fill in all fields.');
+      }
+    }
+
+    // Function to populate the inputs when a row is clicked
+function populateInputs(event) {
+  const row = event.target.closest('tr'); // Find the closest row element
+        if (row) {
+            const cells = row.getElementsByTagName('td');
+            
+            document.getElementById('productName').value = cells[0].innerText;
+            document.getElementById('category').value = cells[1].innerText;
+            document.getElementById('class').value = cells[2].innerText;
+            document.getElementById('unitPrice').value = cells[3].innerText;
+            document.getElementById('expiryDate').value = cells[4].innerText;
+  }
+}
+
+    // Function to clear all input fields
+    function clearInputs() {
+    
+      document.getElementById('productName').value = '';
+      document.getElementById('category').value = 'pharmacy';
+      document.getElementById('class').value = 'service';
+      document.getElementById('unitPrice').value = '';
+      document.getElementById('expiryDate').value = '';
+    }
+
+    // Function to render products from Firebase
+    function renderProducts(snapshot) {
+      const products = snapshot.val();
+      const productBody = document.getElementById('productBody');
+
+      productBody.innerHTML = '';
+
+      for (let productId in products) {
+        const product = products[productId];
+        const row = document.createElement('tr');
+
+        // Create and append cells for each product property
+        for (let key in product) {
+          const cell = document.createElement('td');
+          cell.textContent = product[key];
+          row.appendChild(cell);
+        }
+
+        // Add event listener to populate inputs when row is clicked
+        row.addEventListener('click', populateInputs);
+
+        // Append row to the table body
+        productBody.appendChild(row);
+      }
+    }
+
+    // Listen for changes in the products data
+    productRef.on('value', renderProducts);
+  </script>
+</body>
+</html>

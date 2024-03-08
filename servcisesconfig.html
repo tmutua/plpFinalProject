@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services Configurations</title>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    input, select {
+      margin-bottom: 10px;
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Services Configurations</h1>
+    <label for="serviceName">Service Name:</label>
+    <input type="text" id="serviceName">
+    <label for="department">Department:</label>
+    <select id="department">
+      <option value="pharmacy">Pharmacy Department</option>
+      <option value="lab">Laboratory Department</option>
+      <option value="nursing">Nursing Department</option>
+      <option value="general">General Consultation</option>
+      <option value="radiology">Radiology Department</option>
+    </select>
+    <label for="serviceRate">Service Rate:</label>
+    <input type="number" id="serviceRate">
+    <button onclick="addService()">Add Service</button>
+    <button onclick="updateService()">Update Service</button>
+    <button onclick="clearInputs()">New</button>
+    <table id="serviceTable">
+      <thead>
+        <tr>
+          <th>Service ID</th>
+          <th>Service Name</th>
+          <th>Department</th>
+          <th>Service Rate</th>
+        </tr>
+      </thead>
+      <tbody id="serviceBody">
+      </tbody>
+    </table>
+  </div>
+  <script>
+    // Initialize Firebase
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDJBNgYDCJoOY3cOLUUK7JWNf-dx1_B3vY",
+        authDomain: "teetech-67c26.firebaseapp.com",
+        databaseURL: "https://teetech-67c26-default-rtdb.firebaseio.com",
+        projectId: "teetech-67c26",
+        storageBucket: "teetech-67c26.appspot.com",
+        messagingSenderId: "307099503704",
+        appId: "1:307099503704:web:f31cddc061f3fbfc598e2d"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+    const serviceRef = database.ref('services');
+
+    // Keep track of the last used service ID
+        let lastServiceId = 0;
+
+    // Function to add a service
+    function addService() {
+      const serviceName = document.getElementById('serviceName').value;
+      const department = document.getElementById('department').value;
+      const serviceRate = document.getElementById('serviceRate').value;
+
+      if (serviceName && department && serviceRate) {
+        // Increment the last used service ID
+         lastServiceId++;
+        const newService = {
+          serviceId: lastServiceId,
+          serviceName: serviceName,
+          department: department,
+          serviceRate: serviceRate
+        };
+
+        serviceRef.push(newService);
+
+        clearInputs();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    // Function to update a service
+    function updateService() {
+      const serviceName = document.getElementById('serviceName').value;
+      const department = document.getElementById('department').value;
+      const serviceRate = document.getElementById('serviceRate').value;
+
+      const selectedRow = document.querySelector('tr.selected');
+      if (selectedRow && serviceName && department && serviceRate) {
+        const serviceId = selectedRow.getAttribute('data-id');
+        const updatedService = {
+          serviceName: serviceName,
+          department: department,
+          serviceRate: serviceRate
+        };
+
+        serviceRef.child(serviceId).update(updatedService);
+
+        clearInputs();
+      } else {
+        alert('Please select a service from the table and fill in all fields.');
+      }
+    }
+
+    // Function to clear all input fields
+    function clearInputs() {
+    document.getElementById('serviceName').value = '';
+    document.getElementById('department').value = '';
+    document.getElementById('serviceRate').value = '';
+    }
+    // Function to populate the inputs when a row is clicked
+    function populateInputs(event) {
+      const row = event.target.parentNode;
+      const serviceId = row.cells[0].innerText;
+      const serviceName = row.cells[1].innerText;
+      const department = row.cells[2].innerText;
+      const serviceRate = row.cells[3].innerText;
+
+      document.getElementById('serviceName').value = serviceName;
+      document.getElementById('department').value = department;
+      document.getElementById('serviceRate').value = serviceRate;
+
+      clearSelectedRows();
+      row.classList.add('selected');
+    }
+
+    // Function to clear all input fields
+    function clearInputs() {
+      document.getElementById('serviceName').value = '';
+      document.getElementById('department').value = 'pharmacy';
+      document.getElementById('serviceRate').value = '';
+    }
+
+    // Function to clear selected rows
+    function clearSelectedRows() {
+      const selectedRow = document.querySelector('tr.selected');
+      if (selectedRow) {
+        selectedRow.classList.remove('selected');
+      }
+    }
+
+    // Function to render services from Firebase
+    function renderServices(snapshot) {
+      const services = snapshot.val();
+      const serviceBody = document.getElementById('serviceBody');
+
+      serviceBody.innerHTML = '';
+
+      for (let serviceId in services) {
+        const service = services[serviceId];
+        const row = document.createElement('tr');
+        row.setAttribute('data-id', serviceId);
+        row.addEventListener('click', populateInputs);
+
+        const serviceIdCell = document.createElement('td');
+        serviceIdCell.textContent = service.serviceId;
+        row.appendChild(serviceIdCell);
+
+        const serviceNameCell = document.createElement('td');
+        serviceNameCell.textContent = service.serviceName;
+        row.appendChild(serviceNameCell);
+
+        const departmentCell = document.createElement('td');
+        departmentCell.textContent = service.department;
+        row.appendChild(departmentCell);
+
+        const serviceRateCell = document.createElement('td');
+        serviceRateCell.textContent = service.serviceRate;
+        row.appendChild(serviceRateCell);
+
+        serviceBody.appendChild(row);
+      }
+    }
+
+    // Listen for changes in the services data
+    serviceRef.on('value', renderServices);
+  </script>
+</body>
+</html>
