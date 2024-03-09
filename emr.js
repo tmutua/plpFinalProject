@@ -4,14 +4,30 @@ function changeBillItem(){
     var selectedItem=itemType.options[itemType.selectedIndex].value;
     var itemLabel=document.getElementById('itemLabel');
     var itemSearch=document.getElementById('itemName');
+    var itemList=document.getElementById('itemList');
 
     if(selectedItem==="service"){
         itemLabel.textContent="Service Name";
+        itemSearch.removeEventListener('click',showProductList);
+        itemSearch.addEventListener('click',showServiceList);
+        itemList.removeEventListener('change',selectProduct);
+        itemList.addEventListener('change',selectService);
+    
         
     }else{
         itemLabel.textContent="Product Name";
+        itemSearch.removeEventListener('click',showServiceList);
+        itemSearch.addEventListener('click',showProductList);
+        itemList.removeEventListener('change',selectService);
+        itemList.addEventListener('change',selectProduct);
     }
+    document.getElementById('itemList').options[document.getElementById('itemList').selectedIndex].text='';
 }
+// Initially set up event listener for product search
+window.onload = function() {
+    var input = document.getElementById("itemName");
+    input.addEventListener('click', searchProduct);
+  };
 
     function addItem() {
         var itemName = document.getElementById("itemName").value;
@@ -51,6 +67,14 @@ function changeBillItem(){
         // Display success message
         document.getElementById("successMessage").innerText = "Bill item added successfully.";
     }
+    function newBill(){
+        document.getElementById("itemName").value = "";
+        document.getElementById("billDateTime").value = "";
+        document.getElementById("scheme").value = "";
+        document.getElementById("unitPrice").value = "";
+        document.getElementById("quantity").value = "";
+    }
+
     
     function toggleInvoiceButton(){
     var saleType=document.getElementById('saleType').value;
