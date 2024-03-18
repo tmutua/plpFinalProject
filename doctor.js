@@ -78,3 +78,17 @@ function savePrescription() {
         alert("Please fill in all fields before saving the prescription.");
     }
 }
+// Function to display patient queue on other pages
+/*
+function displayPatientQueue() {
+    var queue = JSON.parse(localStorage.getItem('patientQueue')) || [];
+    console.log('Patient Queue:', queue);
+    // Display the patient queue on the page as needed
+  }
+  
+  // Call the function to display patient queue when the page loads
+  window.onload = function() {
+    displayPatientQueue();
+  };
+  
+*/

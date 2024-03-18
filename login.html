@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Hospital Login</h2>
+        <form id="loginForm">
+            <div class="form-group" id="hospitalCodeInput">
+                <label for="hospitalCode">Hospital Code:</label>
+                <input type="text" id="hospitalCode" name="hospitalCode" required>
+            </div>
+            <div class="form-group" id="hospitalNameDisplay" style="display: none;">
+                <p id="hospitalName"></p>
+            </div>
+            <div class="form-group" id="usernameInput" style="display: none;">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group" id="passwordInput" style="display: none;">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" id="loginButton" class="btn" style="display: none;">Login</button>
+        </form>
+    </div>
+    
+  <script src="login.js"></script>  
+</body>
+</html>

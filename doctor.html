@@ -16,17 +16,50 @@
             <h5>Hospital Name</h5>
           </div>
           <div class="room-indicator">
-            <h6>Room: Registration</h6> <!-- Change "XYZ" with the room name/number -->
+            <h6>Room: Consultation Room</h6>
           </div>
           <div class="queue-button">
             <button class="btn btn-light">Queue</button>
           </div>
+          
+
         </div>
     </div>
     <div class="container mt-5">
         <div class="row">
+            <div class="col">
+                <div>
+                    <label for="opdNo">OpdNo:</label>
+                    <input type="text" id="opdNoo" readonly style="border: none;">
+                </div>
+                <div>
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surnamee" readonly style="border: none;">
+                </div>
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" id="agee" readonly style="border: none;">
+                </div>
+                <div>
+                    <label for="sex">Sex:</label>
+                    <input type="text" id="sexx" style="border: none;">
+                </div>
+                <div>
+                    <label for="residence">Residence</label>
+                    <input type="text" id="residencee" style="border: none;">
+                </div>
+
+            </div>
+            <div class="col">
+                <h2>Queue</h2>
+                    <input type="text" id="search" placeholder="Search names...">
+                    <ul id="queue"></ul>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <h2 class="mb-4">Doctor's Panel</h2>
+                
             </div>
             <div class="col-md-6 text-right">
                 <!-- Actions dropdown -->
@@ -279,5 +312,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="doctor.js"></script>
+    <script src="queue.js"></script>
+    
 </body>
 </html>

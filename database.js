@@ -12,6 +12,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Reference to the Firebase Realtime Database
 var database = firebase.database();
+let patientId=0;
 
 // Function to save form data to Firebase
 function saveFormData(data) {
@@ -60,11 +61,52 @@ function createSuggestionElement(patientData) {
     document.getElementById('sex').value = patientData.sex || '';
     document.getElementById('surname').value = patientData.surname || '';
     document.getElementById('telephone').value = patientData.telephone || '';
+    document.getElementById('opdNo').value = patientData.patientId || '';
     // Clear suggestions
     document.getElementById('suggestions').innerHTML = '';
   });
   return suggestionElement;
 }
+
+// Function to update patient details in the database
+function updatePatientDetails() {
+   const surname =document.getElementById('surname').value;
+   const otherNames= document.getElementById('otherNames').value;
+  const sex=document.getElementById('sex').value;
+  const dob=document.getElementById('dob').value;
+  const idNumber=document.getElementById('idNumber').value;
+  const telephone=document.getElementById('telephone').value;
+  const residence=document.getElementById('residence').value;
+  const nextOfKin=document.getElementById('nextOfKin').value;
+  const relationship=document.getElementById('relationship').value;
+  const nextOfKinContact=document.getElementById('nextOfKinContact').value;
+
+  const updatedData = {
+    surname: surname,
+    otherNames: otherNames,
+    sex: sex,
+    dob: dob,
+    idNumber: idNumber,
+    telephone: telephone,
+    residence: residence,
+    nextOfKin: nextOfKin,
+    relationship: relationship,
+    nextOfKinContact: nextOfKinContact
+    
+  };
+
+  // Update patient details in the database
+  firebase.database().ref('patients').update(updatedData)
+    .then(() => {
+      console.log('Patient details updated successfully.');
+      // Optionally, display a success message to the user
+    })
+    .catch(error => {
+      console.error('Error updating patient details:', error);
+      // Optionally, display an error message to the user
+    });
+}
+
 
 /*// Event listener for search button click
 document.getElementById('searchButton').addEventListener('click', function(event) {
@@ -137,27 +179,35 @@ document.getElementById('searchButton').addEventListener('click', function(event
 // Function to check if ID number or telephone already exists in the database
 function checkExistingData(data) {
   return new Promise((resolve, reject) => {
-    // Check if ID number already exists
-    firebase.database().ref('patients').orderByChild('idNumber').equalTo(data.idNumber).once('value', snapshot => {
-      if (snapshot.exists()) {
-        reject('Patient with the same ID number already exists.');
-      } else {
-        // Check if telephone number already exists
-        firebase.database().ref('patients').orderByChild('telephone').equalTo(data.telephone).once('value', snapshot => {
-          if (snapshot.exists()) {
-            reject('Patient with the same telephone number already exists.');
-          } else {
-            resolve();
-          }
-        }).catch(error => {
-          reject(error.message);
-        });
-      }
-    }).catch(error => {
-      reject(error.message);
-    });
+    if (data.idNumber) {
+      // Check if ID number already exists
+      firebase.database().ref('patients').orderByChild('idNumber').equalTo(data.idNumber).once('value', snapshot => {
+        if (snapshot.exists()) {
+          reject('Patient with the same ID number already exists.');
+        } else {
+          resolve();
+        }
+      }).catch(error => {
+        reject(error.message);
+      });
+    } else if (data.telephone) {
+      // Check if telephone number already exists
+      firebase.database().ref('patients').orderByChild('telephone').equalTo(data.telephone).once('value', snapshot => {
+        if (snapshot.exists()) {
+          reject('Patient with the same telephone number already exists.');
+        } else {
+          resolve();
+        }
+      }).catch(error => {
+        reject(error.message);
+      });
+    } else {
+      // If both ID number and telephone are empty, resolve immediately
+      resolve();
+    }
   });
 }
+
 
 
 // Event listener for form submission
@@ -165,7 +215,9 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   event.preventDefault(); // Prevent default form submission
   
   // Get form data
+  patientId++;
   var formData = {
+    patientId:patientId,
     surname: document.getElementById('surname').value,
     otherNames: document.getElementById('otherNames').value,
     sex: document.getElementById('sex').value,
@@ -195,3 +247,4 @@ document.getElementById('registrationForm').addEventListener('submit', function(
       alert(error);
     });
 });
+//Queue management

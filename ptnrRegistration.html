@@ -12,14 +12,14 @@
   <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
 
 </head>
-<body class="container">
+<body class="container" >
   <div class="top-bar">
     <div class="container d-flex justify-content-between align-items-center">
       <div class="hospital-name">
         <h5>Hospital Name</h5>
       </div>
       <div class="room-indicator">
-        <h6>Room: Registration</h6> <!-- Change "XYZ" with the room name/number -->
+        <h6>Room: Registration</h6>
       </div>
       <div class="queue-button">
         <button class="btn btn-light">Queue</button>
@@ -34,8 +34,12 @@
       </div>
       <div id="suggestions"></div>
     <form id="registrationForm">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row" style="background-color: rgb(129, 177, 232);">
+        <div >
+          <input type="text" id="search" placeholder="Search names...">
+          <ul id="queue"></ul>
+        </div>
+        <div class="col-md-4">
           <div class="form-group">
             <label for="surname">Surname:</label>
             <input type="text" class="form-control" id="surname" name="surname" required>
@@ -66,7 +70,7 @@
             <input type="number" class="form-control" id="idNumber" name="idNumber">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="telephone">Telephone:</label>
             <input type="tel" class="form-control" id="telephone" name="telephone">
@@ -88,6 +92,21 @@
             <input type="tel" class="form-control" id="nextOfKinContact" name="nextOfKinContact">
           </div>
           <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
+          <button type="button" class="btn btn-primary" id="updateButton" onclick="updatePatientDetails()">Update</button>
+          <button type="reset" class="btn btn-primary">New</button>
+        </div>
+        <div class="col-md-4">
+           <!-- Pop-up modal -->
+          <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p>Patient added to the queue!</p>
+            </div>
+  </div>
+          <div class="form-group">
+            <label for="opdNo">opdNo:</label>
+            <input type="text" id="opdNo" readonly>
+          </div>
         </div>
       </div>
     </form>
@@ -128,6 +147,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="emr.js"></script>
   <script src="database.js"></script>
+  <script src="queue.js"></script>
 
 </body>
 </html>

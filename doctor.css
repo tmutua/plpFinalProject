@@ -13,4 +13,16 @@
   .queue-button {
     margin-right: 20px;
   }
+  .col{
+    border-right: 1px solid #808488;
+    }
+    .col:last-child{
+    border-right: none;
+    }
+    #queue {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 5px;
+  }
   
