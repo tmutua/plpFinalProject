@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     loadNames();
-
+    //event listner for clicking queue items
     queueList.addEventListener('click', function(event) {
         if (event.target.tagName === 'LI') {
             const patientName = event.target.textContent.trim();
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
         dbRef.orderByChild('surname').equalTo(patientName).once('value', function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
                 const patientData = childSnapshot.val();
-                // Assuming you have elements with IDs opdno, surname, age, sex, residence
                 document.getElementById('opdnoo').value = patientData.opdno;
                 document.getElementById('surnamee').value = patientData.surname;
                 document.getElementById('agee').value = patientData.age;

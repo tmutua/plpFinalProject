@@ -1,3 +1,24 @@
+$(document).ready(function() {
+  $('#ageInputButton').click(function() {
+    $('#ageInputModal').modal('show');
+  });
+
+  $('#calculateDateOfBirth').click(function() {
+    var years = parseInt($('#years').val());
+    var months = parseInt($('#months').val());
+    var weeks = parseInt($('#weeks').val());
+
+    var currentDate = new Date();
+    var calculatedDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth() - months, currentDate.getDate() - (weeks * 7));
+    
+    var formattedDate = calculatedDate.toISOString().split('T')[0];
+
+    $('#dob').val(formattedDate);
+
+    $('#ageInputModal').modal('hide');
+  });
+});
+
 const firebaseConfig = {
   apiKey: "AIzaSyDJBNgYDCJoOY3cOLUUK7JWNf-dx1_B3vY",
   authDomain: "teetech-67c26.firebaseapp.com",

@@ -1,6 +1,6 @@
-/* PATIENT REGISTRATION */
+
 .top-bar {
-    background-color: #73879c; /* Adjust color as needed */
+    background-color: #73879c;
     color: #fff;
     padding: 10px 0;
   }
@@ -14,89 +14,58 @@
   .queue-button {
     margin-right: 20px;
   }
+  /*
   .search-container {
+    margin: 0 auto;
     text-align: center;
-    margin-top: 50px; /* Adjust as needed */
+    margin-top: 30px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
   }
-  .search-input {
-    width: 500px; /* Adjust width as needed */
-    padding: 10px 35px 10px 15px;
-    border-radius: 25px;
+  */
+  #searchInput { 
     border: 1px solid #ced4da;
     outline: none;
+    border-radius: 5px;
+    width: 80%;
+    
   }
-  .search-icon {
-    position: relative;
-    left: -30px;
-    top: 2px;
-    color: #aaa;
+
+  /*#suggestions{
+  background-color: #f0f0f0; 
+  border: 1px solid #ccc; 
+  padding: 10px; 
+  max-width: 400px; 
+  margin: 0 auto; 
   }
+  */
   #queue {
     max-height: 200px;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 5px;
 }
+.patientDetails{
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  box-sizing: border-box; 
+  margin-top: 10px;
+}
+.patientDetails label{
+font-weight: bold;
+}
+.patientDetails input{
+  width: 70%;
+}
+.patientDetails select{
+  width: 70%;
+}
+#dob{
+  width: 70%;
+}
 
 
-  /* BILLING */
-  .row input{
-    color: #333;
-    background-color: #f0f0f0;
-    font-size: 16px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
-    margin: 0;
-}
-select{
-    width:300px;
-    height: 45px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #333;
-}
-select::-ms-expand{
-    display: none;
-}
-.col{
-border-right: 1px solid #808488;
-}
-.col:last-child{
-border-right: none;
-}
-label{
-    color: #666;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-    text-align: left;
-    padding: 5px;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-th {
-    background-color: #f2f2f2;
-}
-.success-message {
-    color: green;
-    margin-top: 10px;
-}
-#invoiceButton{
-display: none;
-}
-.mobilePay{
-    display: none;
-}
+  

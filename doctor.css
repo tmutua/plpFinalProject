@@ -25,4 +25,20 @@
       border: 1px solid #ccc;
       padding: 5px;
   }
-  
+  #queue li{
+    cursor: pointer;
+
+  }
+  .complains{
+    border: 2px solid lightblue;
+  }
+  .doctorQueue label{
+    font-weight: bold;
+
+  }
+  .doctorQueue input{
+    background-color: whitesmoke;
+  }
+  .complaints label{
+    font-weight: bold;
+  }

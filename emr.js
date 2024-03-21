@@ -135,24 +135,5 @@ window.onload = function() {
         printWindow.document.close();
         printWindow.print();
     }
- //PATIENT REGISTRATION 
- $(document).ready(function() {
-    $('#ageInputButton').click(function() {
-      $('#ageInputModal').modal('show');
-    });
-
-    $('#calculateDateOfBirth').click(function() {
-      var years = parseInt($('#years').val());
-      var months = parseInt($('#months').val());
-      var weeks = parseInt($('#weeks').val());
-
-      var currentDate = new Date();
-      var calculatedDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth() - months, currentDate.getDate() - (weeks * 7));
-      
-      var formattedDate = calculatedDate.toISOString().split('T')[0];
-
-      $('#dob').val(formattedDate);
-
-      $('#ageInputModal').modal('hide');
-    });
-  });
+ 
+ 

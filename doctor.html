@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor's Panel</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="doctor.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
 </head>
-<body>
+<body style="background-color: rgb(209, 228, 234);" class="container">
     <div class="top-bar">
         <div class="container d-flex justify-content-between align-items-center">
           <div class="hospital-name">
@@ -18,16 +20,11 @@
           <div class="room-indicator">
             <h6>Room: Consultation Room</h6>
           </div>
-          <div class="queue-button">
-            <button class="btn btn-light">Queue</button>
-          </div>
-          
-
         </div>
     </div>
     <div class="container mt-5">
-        <div class="row">
-            <div class="col">
+        <div class="row" style="background-color: whitesmoke;">
+            <div class="col doctorQueue">
                 <div>
                     <label for="opdNo">OpdNo:</label>
                     <input type="text" id="opdNoo" readonly style="border: none;">
@@ -45,26 +42,26 @@
                     <input type="text" id="sexx" style="border: none;">
                 </div>
                 <div>
-                    <label for="residence">Residence</label>
+                    <label for="residence">Residence:</label>
                     <input type="text" id="residencee" style="border: none;">
                 </div>
 
             </div>
             <div class="col">
-                <h2>Queue</h2>
-                    <input type="text" id="search" placeholder="Search names...">
+                <h6>patient queue</h6>
+                    <input type="text" id="search" placeholder="Search names..." style="border-radius: 3px;
+                    border: 3px solid rgb(238, 225, 225);">
                     <ul id="queue"></ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row actions">
             <div class="col-md-6">
-                <h2 class="mb-4">Doctor's Panel</h2>
-                
+                <h6 class="mb-4"><u>Doctor's Panel</u></h6>
             </div>
             <div class="col-md-6 text-right">
                 <!-- Actions dropdown -->
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="actionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Actions
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdown">
@@ -78,30 +75,30 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container complaints" >
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="complaints">Patient Complaints:</label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="complaints" name="complaints" placeholder="Enter patient complaints...">
+                        <input type="text" class="form-control" id="complaints" name="complaints" >
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" onclick="addEntry('complaints', 'complaintsList')">Add</button>
+                            <button type="button" class="btn btn-success" onclick="addEntry('complaints', 'complaintsList')">Add</button>
                         </div>
                     </div>
                     <ul id="complaintsList" class="list-group"></ul>
                 </div>
                 <div class="form-group">
                     <label for="presenting_history">History of Presenting Illness:</label>
-                    <textarea class="form-control mb-2" id="presenting_history" name="presenting_history" rows="4" placeholder="Enter history of presenting illness..."></textarea>
-                    <button type="button" class="btn btn-primary mb-2 float-right">Save</button>
+                    <textarea class="form-control mb-2" id="presenting_history" name="presenting_history" rows="4"></textarea>
+                    <button type="button" class="btn btn-sucess mb-2 float-right">Save</button>
                 </div>
                 <div class="form-group">
                     <label for="allergies">Allergies:</label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="allergies" name="allergies" placeholder="Enter allergies...">
+                        <input type="text" class="form-control" id="allergies" name="allergies" >
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" onclick="addEntry('allergies', 'allergiesList')">Add</button>
+                            <button type="button" class="btn btn-success" onclick="addEntry('allergies', 'allergiesList')">Add</button>
                         </div>
                     </div>
                     <ul id="allergiesList" class="list-group"></ul>
@@ -109,9 +106,9 @@
                 <div class="form-group">
                     <label for="impression">Impression:</label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="impression" name="impression" placeholder="Enter impression...">
+                        <input type="text" class="form-control" id="impression" name="impression" >
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" onclick="addEntry('impression', 'impressionList')">Add</button>
+                            <button type="button" class="btn btn-success" onclick="addEntry('impression', 'impressionList')">Add</button>
                         </div>
                     </div>
                     <ul id="impressionList" class="list-group"></ul>
@@ -119,9 +116,9 @@
                 <div class="form-group">
                     <label for="diagnosis">Diagnosis:</label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="diagnosis" name="diagnosis" placeholder="Enter diagnosis...">
+                        <input type="text" class="form-control" id="diagnosis" name="diagnosis" >
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" onclick="addEntry('diagnosis', 'diagnosisList')">Add</button>
+                            <button type="button" class="btn btn-success" onclick="addEntry('diagnosis', 'diagnosisList')">Add</button>
                         </div>
                     </div>
                     <ul id="diagnosisList"></ul>
@@ -130,18 +127,18 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="medical_history">Medical History:</label>
-                    <textarea class="form-control mb-2" id="medical_history" name="medical_history" rows="4" placeholder="Enter medical history..."></textarea>
-                    <button type="button" class="btn btn-primary mb-2 float-right">Save</button>
+                    <textarea class="form-control mb-2" id="medical_history" name="medical_history" rows="4"></textarea>
+                    <button type="button" class="btn btn-success mb-2 float-right">Save</button>
                 </div>
                 <div class="form-group">
                     <label for="surgical_history">Surgical History:</label>
-                    <textarea class="form-control mb-2" id="surgical_history" name="surgical_history" rows="4" placeholder="Enter surgical history..."></textarea>
-                    <button type="button" class="btn btn-primary mb-2 float-right">Save</button>
+                    <textarea class="form-control mb-2" id="surgical_history" name="surgical_history" rows="4" ></textarea>
+                    <button type="button" class="btn btn-success mb-2 float-right">Save</button>
                 </div>
                 <div class="form-group">
                     <label for="clinical_summary">Clinical Summary:</label>
-                    <textarea class="form-control mb-2" id="clinical_summary" name="clinical_summary" rows="4" placeholder="Enter clinical summary..."></textarea>
-                    <button type="button" class="btn btn-primary mb-2 float-right">Save</button>
+                    <textarea class="form-control mb-2" id="clinical_summary" name="clinical_summary" rows="4"></textarea>
+                    <button type="button" class="btn btn-success mb-2 float-right">Save</button>
                 </div>
             </div>
         </div>
@@ -313,6 +310,6 @@
 
     <script src="doctor.js"></script>
     <script src="queue.js"></script>
-    
+    <script src="database.js"></script>
 </body>
 </html>
