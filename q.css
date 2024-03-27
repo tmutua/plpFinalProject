@@ -1,0 +1,20 @@
+#searchInput {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Style for the queue list */
+  #queueList {
+    max-height: 300px; /* Maximum height of the queue list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0;
+    list-style-type: none; /* Remove default list styles */
+  }
+
+  /* Style for each queue item */
+  #queueList li {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }

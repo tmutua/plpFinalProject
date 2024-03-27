@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
     const registrationForm = document.getElementById('registrationForm');
     const queueList = document.getElementById('queue');
     const searchInput = document.getElementById('search');
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadNames();
     //event listner for clicking queue items
-    queueList.addEventListener('click', function(event) {
+    /*queueList.addEventListener('click', function(event) {
         if (event.target.tagName === 'LI') {
             const patientName = event.target.textContent.trim();
             fetchPatientInfo(patientName);
@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('residencee').value = patientData.residence;
             });
         });
-    } 
+    } */
+    /*
     registrationForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -68,3 +69,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+*/

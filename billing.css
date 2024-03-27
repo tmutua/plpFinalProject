@@ -91,3 +91,23 @@ display: none;
   .queue-button {
     margin-right: 20px;
   }
+  #contextMenu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    z-index: 1000;
+    width: 100%;
+    min-width: 120px; /* Set a minimum width */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
+  }
+  #contextMenu menuitem {
+    display: block;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  #contextMenu menuitem:hover {
+    background-color: #f0f0f0;
+  }

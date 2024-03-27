@@ -1,0 +1,36 @@
+.top-bar {
+    background-color: #73879c; /* Adjust color as needed */
+    color: #fff;
+    padding: 10px 0;
+  }
+  .hospital-name {
+    margin-left: 20px;
+  }
+  .room-indicator {
+    flex: 1;
+    text-align: center;
+  }
+  .queue-button {
+    margin-right: 20px;
+  }
+  .col{
+    border-right: 1px solid #808488;
+    }
+    .col:last-child{
+    border-right: none;
+    }
+    .pdetails{
+        background-color: whitesmoke;
+        margin-bottom: 15px;
+    }
+    .selectedPatient input{
+        background-color: whitesmoke;
+    }
+    .selectedPatient label{
+        font-weight: bold;
+    }
+    .top{
+      background-color: black;
+      height: 40px;
+      text-decoration-color: white;
+    }

@@ -28,6 +28,23 @@ window.onload = function() {
     var input = document.getElementById("itemName");
     input.addEventListener('click', searchProduct);
   };
+//clicking added item in the table
+function addRowListeners() {
+    var rows = document.querySelectorAll('#billItems tr:not(:first-child)');
+    rows.forEach(function(row) {
+        row.addEventListener('click', function() {
+            var cells = row.cells;
+            document.getElementById("itemName").value = cells[1].innerText;
+            document.getElementById("billDateTime").value = cells[2].innerText;
+            document.getElementById("scheme").value = cells[3].innerText;
+            document.getElementById("unitPrice").value = cells[4].innerText;
+            document.getElementById("quantity").value = cells[5].innerText;
+            document.getElementById("updateButton").classList.remove("hidden");
+        });
+    });
+}
+
+addRowListeners();
 
     function addItem() {
         var itemName = document.getElementById("itemName").value;

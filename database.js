@@ -39,7 +39,32 @@ let patientId=0;
 function saveFormData(data) {
   return firebase.database().ref('patients').push(data);
 }
+//function to add patient to queue
+/*
+function queuePatient(patientDetails){
+  var queueRef=database.ref('queue');
+  queueRef.push(patientDetails);
 
+}
+//event listner to the queue buuton click
+
+document.getElementById('queuePatientButton').addEventListener('click', function() {
+  var surname = document.getElementById('surname').value;
+  var otherNames = document.getElementById('otherNames').value;
+  var patientName= otherNames + ' ' + surname;
+  var residence=document.getElementById('residence').value;
+  var sex=document.getElementById('sex').value;
+
+  var patientDetails = {
+    name: patientName,
+    residence: residence,
+    sex: sex
+    
+  };
+
+  queuePatient(patientDetails);
+});
+*/
 // Function to display success message
 function displaySuccessMessage() {
   alert('Patient Registred successfully!.');
@@ -250,6 +275,26 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     relationship: document.getElementById('relationship').value,
     nextOfKinContact: document.getElementById('nextOfKinContact').value
   };
+  //FUNCTION TO ADD PATIENT TO QUEUE
+  function queuePatient(patientDetails){
+    var queueRef=database.ref('queue');
+    queueRef.push(patientDetails);
+  
+  }
+  var surname = document.getElementById('surname').value;
+  var otherNames = document.getElementById('otherNames').value;
+  var patientName= otherNames + ' ' + surname;
+  var residence=document.getElementById('residence').value;
+  var sex=document.getElementById('sex').value;
+
+  var patientDetails = {
+    name: patientName,
+    residence: residence,
+    sex: sex
+    
+  };
+
+  queuePatient(patientDetails);
 
   // Check if ID number or telephone already exists
   checkExistingData(formData)

@@ -7,6 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="billing.css">
+<link rel="stylesheet" href="q.css">
 <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
@@ -28,7 +29,12 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
   }
   .billingQueue #queue li{
     cursor: pointer;
-
+  }
+  .hidden{
+    display: none;
+  }
+  #billItems td{
+    cursor: pointer;
   }
 </style>
 </head>
@@ -57,8 +63,8 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
                         <input type="text" id="opdNoo" readonly style="border: none;">
                     </div>
                     <div>
-                        <label for="surname">Surname:</label>
-                        <input type="text" id="surnamee" readonly style="border: none;">
+                        <label for="surname">Patient Name:</label>
+                        <input type="text" id="pname" readonly style="border: none;">
                     </div>
                     <div>
                         <label for="age">Age:</label>
@@ -75,12 +81,18 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
     
                 </div>
                 <div class="col">
-                    <h6>patient queue</h6>
-                    <div id="namesList">
-                        <input type="text" id="search" placeholder="Search names..."
-                        style="border-radius: 5px; border: 1px solid lightcyan;">
-                        
-                    </div>  
+                    <div>
+                        <input type="text" id="searchInput" placeholder="Search by patient name">
+                        <h6>Queue</h6>
+                        <ul id="queueList">
+                            
+                        </ul>
+                    </div>
+                     <!-- Context menu for right-click options -->
+                     <menu id="contextMenu" type="context">
+                        <menuitem id="finalizeOption">Finalize</menuitem>
+                        <menuitem id="removeOption">Remove from Queue</menuitem>
+                      </menu>
                 </div>
             </div>
         </div>
@@ -125,6 +137,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
             <div>
                 <button class="btn btn-success" onclick="addItem()"><h6>+</h6></button>
                 <button class="btn btn-success" onclick="newBill()">New</button>
+                <button id="updateButton" class="hidden btn btn-success" onclick="updateItem()">Update</button>
                 <p id="successMessage" class="success-message"></p>
             </div>
         </div>
@@ -199,7 +212,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 const productRef = database.ref('products');
 const serviceRef = database.ref('services');
-const patientBio= database.ref('patients');
+
 
 
 // Function to show product list when input is clicked
@@ -245,39 +258,11 @@ function showProductList() {
           option.value = service.serviceRate;
           itemList.add(option);
         });
-      });
+      }); 
     }
+   
+    
 
-    function populateBiodata(name){
-        patientBio.once('value',function(snapshot){
-            var bioData=snapshot.val();
-            console.log("Snapshot Value: ", bioData); // Debugging
-            document.getElementById('opdNoo').value=bioData.patientId;
-            document.getElementById('surnamee').value=bioData.surname;
-            document.getElementById('sexx').value=bioData.sex;
-            document.getElementById('residencee').value=bioData.residence;
-            
-        })
-
-
-    }
-    var queueNames=localStorage.getItem('names');
-    if (queueNames){
-        var queueArray=JSON.parse(queueNames);
-        var queueListDiv=document.getElementById('namesList');
-        var list=document.createElement('ul');
-        queueArray.forEach(function(name){
-            var listItem=document.createElement('li');
-            listItem.textContent=name;
-            listItem.addEventListener('click',function(){
-                populateBiodata(name);
-            });
-            list.appendChild(listItem);
-        });
-        queueListDiv.appendChild(list);
-    }else{
-        document.getElementById('nameslist').textContent='No patients in the queue';
-    }
 
     
 </script>
@@ -287,7 +272,9 @@ function showProductList() {
 
 
 
-<script src="emr.js"></script>
+<script src="billing.js"></script>
+<script src="q.js"></script>
+
 
 </body>
 </html>
