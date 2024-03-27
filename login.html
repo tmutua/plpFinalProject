@@ -1,31 +1,56 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <div class="login-container">
-        <h2>Hospital Login</h2>
+        <div style="display: none;">
+            <div class="row">
+                <div class="col">
+                    <p>TeeTech</p>
+                    <p><i>technologies</i></p>
+                    
+                </div>
+                <div class="col">
+                    <img src="teetech.png" alt="" style="width: 50px; height: 50px;">
+                </div>
+            </div>
+        </div>
+        <div class="login loginHeader" >
+            <h6 style="color: rgb(93, 93, 201);"><i>please enter your credintials  to login</i></h6>   
+        </div>
         <form id="loginForm">
-            <div class="form-group" id="hospitalCodeInput">
-                <label for="hospitalCode">Hospital Code:</label>
-                <input type="text" id="hospitalCode" name="hospitalCode" required>
+            <div class="code">
+                <div class="form-group">
+                    <input type="text" id="hospitalCode" name="hospitalCode" required placeholder="hospital code">
+                </div>
+                <div class="login">
+                    <button class="btn btn-primary" id="proceed">Proceed</button>
+                </div>
             </div>
-            <div class="form-group" id="hospitalNameDisplay" style="display: none;">
-                <p id="hospitalName"></p>
+            <div>
+                <div class="form-group" style="text-align: center;">
+                    <p id="hospitalName" style="display: none;"></p>
+                </div>
+                <div class="form-group" >
+                    <input type="text" id="username" name="username"  placeholder="username" style="display: none;">
+                </div>
+                <div class="form-group"  >
+                    <input type="password" id="password" name="password"  placeholder="password" style="display: none;">
+                </div>
+                <div class="login" >
+                    <button type="submit" id="loginButton" class="btn" style="display: none;" >Login</button >
+                </div>
+                
+
             </div>
-            <div class="form-group" id="usernameInput" style="display: none;">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group" id="passwordInput" style="display: none;">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" id="loginButton" class="btn" style="display: none;">Login</button>
+            
         </form>
     </div>
     

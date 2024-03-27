@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="users.css">
+    <title>users</title>
+</head>
+<body>
+    <div class="container">
+        <h2>User Creation Form</h2>
+        <form id="userForm">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" required><br>
+
+            <label for="othernames">Other Names:</label>
+            <input type="text" id="othernames" name="othernames" required><br>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+            <label for="roles">Roles:</label>
+            <select id="roles" name="roles">
+                <option value="nurse">Nurse</option>
+                <option value="doctor">Doctor</option>
+            </select><br>
+
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+</body>
+</html>
