@@ -78,3 +78,37 @@ function savePrescription() {
         alert("Please fill in all fields before saving the prescription.");
     }
 }
+//visit summary
+const visitSummaryLink = document.getElementById('visitSummaryLink');
+const visitSummary = document.getElementById('visitSummary');
+
+ // Function to handle click event on visit summary link
+ visitSummaryLink.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const selectedName = form.querySelector('input[name="pname"]').value;
+
+    // Fetch visit summary for the selected name
+    firebase.database().ref('treatment').orderByChild('pname').equalTo(selectedName).once('value')
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          visitSummary.innerHTML = ''; // Clear existing content
+          snapshot.forEach(childSnapshot => {
+            const data = childSnapshot.val();
+            // Display visit summary
+            const summaryElement = document.createElement('div');
+            summaryElement.innerHTML = `
+              <p>Name: ${data.pname}</p>
+              <p>Diagnosis: ${data.diagnosis}</p>
+              <!-- Add more fields as needed -->
+            `;
+            visitSummary.appendChild(summaryElement);
+          });
+        } else {
+          visitSummary.innerHTML = 'No visit summary found for the selected name.';
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching visit summary:", error);
+      });
+  });

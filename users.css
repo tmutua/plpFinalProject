@@ -6,7 +6,7 @@
     border-radius: 10px;
 }
 
-h2 {
+h3 {
     text-align: center;
     color: #333;
 }
@@ -17,6 +17,7 @@ label {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 select {
     width: 100%;
     padding: 10px;
@@ -26,9 +27,6 @@ select {
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -38,4 +36,10 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+.editButton,
+.deleteButton {
+    display: inline-block;
+    margin-right: 5px;
+    
 }

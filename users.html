@@ -4,35 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="users.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+
     <title>users</title>
 </head>
 <body>
     <div class="container">
-        <h2>User Creation Form</h2>
+        <h3>User Details</h3>
         <form id="userForm">
-            <label for="surname">Surname:</label>
-            <input type="text" id="surname" name="surname" required><br>
+            <div class="row">
+                <div class="col">
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surname" name="surname" required><br>
 
-            <label for="othernames">Other Names:</label>
-            <input type="text" id="othernames" name="othernames" required><br>
+                    <label for="othernames">Other Names:</label>
+                    <input type="text" id="othernames" name="othernames" required><br>
 
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="email"><br>
+                </div>
+                <div class="col">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
 
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                    <label for="roles">Roles:</label>
+                    <select id="roles" name="roles">
+                        <option value="recordsOfficer">Records officer</option>
+                        <option value="billingOfficer">Billing officer</option>
+                        <option value="nurse">Nurse</option>
+                        <option value="doctor">Doctor</option>
+                    </select><br>
 
-            <label for="roles">Roles:</label>
-            <select id="roles" name="roles">
-                <option value="nurse">Nurse</option>
-                <option value="doctor">Doctor</option>
-            </select><br>
+                    <br><button type="submit" id="addButton">Add User</button>
+                    <button type="button" id="updateButton" style="display: none;">Update User</button>
+                </div>
+            </div>
+            
 
-            <button type="submit">Add User</button>
+            
         </form>
+        <div>
+            <h2>User List</h2>
+        <table id="userTable" class="table">
+            <thead>
+                <tr>
+                    <th>Surname</th>
+                    <th>Other Names</th>
+                    <th>Username</th>
+                    <th>Roles</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+        </table>
+        </div>
     </div>
+    <script src="users.js"></script>
 </body>
 </html>

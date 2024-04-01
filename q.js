@@ -4,6 +4,16 @@
  function displayQueue() {
    var queueRef = database.ref('queue');
 
+   //test
+   var billRef= database.ref('bills');
+   billRef.on('value',function(snapshot){
+    snapshot.forEach(function(snapshot){
+      var patientBill=childSnapshot.val();
+    }
+    );
+  }
+  );
+  //end of test
    queueRef.on('value', function(snapshot) {
      var queueList = document.getElementById('queueList');
      var searchInput = document.getElementById('searchInput');
@@ -113,114 +123,3 @@ function hideContextMenu() {
   var contextMenu = document.getElementById('contextMenu');
   contextMenu.style.display = 'none';
 }
-/*
-
-// Click event listener
-listItem.addEventListener('click', function(event) {
-  // Store the clicked patient details for context menu actions
-  var index = patients.findIndex(function(patient) {
-      return patient.name === patientName;
-  });
-  
-  // Store selected patient details in local storage
-  localStorage.setItem('selectedPatientIndex', index);
-
-  // Populate form with selected patient details
-  populateForm(patients[index]);
-
-  // Add event listeners to form inputs to update patient details
-  document.getElementById('complaints').addEventListener('input', updatePatientData);
-  document.getElementById('allergies').addEventListener('input', updatePatientData);
-  document.getElementById('presenting_history').addEventListener('input', updatePatientData);
-  document.getElementById('medical_history').addEventListener('input', updatePatientData);
-  document.getElementById('surgical_history').addEventListener('input', updatePatientData);
-  document.getElementById('impression').addEventListener('input', updatePatientData);
-  document.getElementById('diagnosis').addEventListener('input', updatePatientData);
-  document.getElementById('clinical_summary').addEventListener('input', updatePatientData);
-});
-
-// Function to populate form with patient details
-function populateForm(patient) {
-  document.getElementById('complaints').value = patient.complains || '';
-  document.getElementById('allergies').value = patient.alergies || '';
-  document.getElementById('presenting_history').value = patient.historyOfPresentingIllness || '';
-  document.getElementById('medical_history').value = patient.medicalHistory || '';
-  document.getElementById('surgical_history').value = patient.surgicalHistory || '';
-  document.getElementById('impression').value = patient.impresion || '';
-  document.getElementById('diagnosis').value = patient.diagnosis || '';
-  document.getElementById('clinical_summary').value = patient.clinicalSummary || '';
-}
-
-// Function to update patient data when form inputs change
-function updatePatientData() {
-  var index = localStorage.getItem('selectedPatientIndex');
-  if (index !== null) {
-      patients[index].complains = document.getElementById('complaints').value;
-      patients[index].alergies = document.getElementById('allergies').value;
-      patients[index].historyOfPresentingIllness = document.getElementById('presenting_history').value;
-      patients[index].medicalHistory = document.getElementById('medical_history').value;
-      patients[index].surgicalHistory = document.getElementById('surgical_history').value;
-      patients[index].impresion = document.getElementById('impression').value;
-      patients[index].diagnosis = document.getElementById('diagnosis').value;
-      patients[index].clinicalSummary = document.getElementById('clinical_summary').value;
-
-      // Update patient details in local storage
-      localStorage.setItem('patients', JSON.stringify(patients));
-      console.log(patients);
-      
-  }
-}
-
-// Click event listener
-listItem.addEventListener('click', function(event) {
-  // Store the clicked patient details for context menu actions
-  var index = patients.findIndex(function(patient) {
-      return patient.name === patientName;
-  });
-  
-  // Store selected patient details in local storage
-  localStorage.setItem('selectedPatientIndex', index);
-
-  // Populate form with selected patient details
-  populateForm(patients[index]);
-});
-
-// Function to handle form submission
-document.getElementById('patientTreatment').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent default form submission
-  
-  // Get the form data
-  var formData = new FormData(event.target);
-
-  // Get the clicked patient index from local storage
-  var index = localStorage.getItem('selectedPatientIndex');
-
-  if (index !== null) {
-      // Construct the patient data object with form data and clicked patient details
-      var patientData = {
-          complains: formData.get('complaints'),
-          alergies: formData.get('allergies'),
-          historyOfPresentingIllness: formData.get('presenting_history'),
-          medicalHistory: formData.get('medical_history'),
-          surgicalHistory: formData.get('surgical_history'),
-          impresion: formData.get('impression'),
-          diagnosis: formData.get('diagnosis'),
-          clinicalSummary: formData.get('clinical_summary'),
-          // Merge with the clicked patient details
-          ...patients[index]
-      };
-
-      // Store the patient data in Firebase
-      var treatmentRef = database.ref('treatment').push(); // Push to generate a unique key
-      treatmentRef.set(patientData)
-      .then(function() {
-          console.log('Patient data saved successfully.');
-          // Optionally, clear the form inputs after submission
-          event.target.reset();
-      })
-      .catch(function(error) {
-          console.error('Error saving patient data:', error);
-      });
-  }
-});
-*/

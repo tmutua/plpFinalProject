@@ -53,6 +53,25 @@ addRowListeners();
         var unitPrice = parseFloat(document.getElementById("unitPrice").value);
         var quantity = parseInt(document.getElementById("quantity").value);
 
+        const pname = document.getElementById('pname').value;
+        const opdNoo = document.getElementById('opdNoo').value;
+        const agee = document.getElementById('agee').value;
+        const sexx = document.getElementById('sexx').value;
+        const residencee= document.getElementById('residencee').value;
+
+        const billItems={
+            pname : pname,
+            opdNo : opdNoo,
+            age : agee,
+            sex: sexx,
+            residence: residencee,
+            itemName: itemName,
+            billingDate: billDateTime,
+            scheme: scheme,
+            unitPrice: unitPrice,
+            quantity: quantity
+        };
+
         var table = document.getElementById("billItems");
         var row = table.insertRow(-1);
 
@@ -73,6 +92,8 @@ addRowListeners();
         cell4.innerHTML = unitPrice;
         cell5.innerHTML = quantity;
         cell6.innerHTML = netAmount.toFixed(2);
+
+        billRef.push(billItems);
 
         // Clear input fields after adding item
         document.getElementById("itemName").value = "";
