@@ -3,17 +3,6 @@
  // Function to display queue
  function displayQueue() {
    var queueRef = database.ref('queue');
-
-   //test
-   var billRef= database.ref('bills');
-   billRef.on('value',function(snapshot){
-    snapshot.forEach(function(snapshot){
-      var patientBill=childSnapshot.val();
-    }
-    );
-  }
-  );
-  //end of test
    queueRef.on('value', function(snapshot) {
      var queueList = document.getElementById('queueList');
      var searchInput = document.getElementById('searchInput');
@@ -33,18 +22,47 @@
 
        var listItem = document.createElement('li');
        listItem.textContent = patientName;
+
        listItem.addEventListener('click', function() {
          // Find the index of clicked patient in the array
          var index = patients.findIndex(function(patient) {
            return patient.name === patientName;
          });
 
-         // Populate patient details when the name is clicked
-         document.getElementById('pname').value = patients[index].name;
-         document.getElementById('sexx').value = patients[index].sex;
-         document.getElementById('residencee').value = patients[index].residence;
+         // Populate patient details of queue node when the name is clicked
+         var patient=patients[index];
+         document.getElementById('pname').value = patient.name;
+         document.getElementById('sexx').value = patient.sex;
+         document.getElementById('residencee').value = patient.residence;
+         document.getElementById('agee').value = patient.age;
          // Populate more patient details as needed
+
+         // Populate patient details of treatment node when the name is clicked
+         document.getElementById('billLab').value = patient.labRequest;
+         document.getElementById('billRadiology').value = patient.radiologyRequest;
+         document.getElementById('billTheatre').value = patient.theatreRequest;
+         document.getElementById('billDrugs').value = patient.prescription;
        });
+       // Fetch additional details from the 'treatment' node 
+      var treatmentRef = database.ref('treatment');
+      treatmentRef.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+       var treatmentData = childSnapshot.val();
+        if (treatmentData) {
+          // Add additional details from 'treatment' node to the corresponding patient in the patients array
+          var index = patients.findIndex(function(patient) {
+            return patient.name === patientName;
+          });
+          patients[index].labRequest = treatmentData.labRequest;
+          patients[index].radiologyRequest = treatmentData.radiologyRequest;
+          patients[index].theatreRequest = treatmentData.theatreRequest;
+          patients[index].prescription = treatmentData.prescription;
+
+
+        }
+      });
+      
+      });
        // Right-click event listener
        listItem.addEventListener('contextmenu', function(event) {
         event.preventDefault(); // Prevent default right-click menu
@@ -63,17 +81,18 @@
         // Store the index of the clicked patient for later use
         contextMenu.dataset.patientIndex = index;
         });
-
-
-
-
        queueList.appendChild(listItem);
 
        // Add patient details to the array
        patients.push({
          name: patientName,
          sex: patientData.sex,
-         residence: patientData.residence
+         age: patientData.age,
+         residence: patientData.residence,
+         labRequest: '',
+         radiologyRequest: '',
+         theatreRequest: '',
+         prescription: ''
 
          // Add more patient details as needed
        });
@@ -123,3 +142,4 @@ function hideContextMenu() {
   var contextMenu = document.getElementById('contextMenu');
   contextMenu.style.display = 'none';
 }
+

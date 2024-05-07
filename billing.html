@@ -36,6 +36,10 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
   #billItems td{
     cursor: pointer;
   }
+  .toBill{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 </style>
 </head>
 <body style="background-color: rgb(209, 228, 234);" class="container">
@@ -96,6 +100,20 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
                 </div>
             </div>
         </div>
+        <div class="container toBill" style="background-color: whitesmoke">
+            <div class="row">
+                <div class="col">
+                    <h6>Services to bill:</h6>
+                    <input type="text" id="billLab" style="width: 100%; border: none;">
+                    <input type="text" id="billRadiology" style="width: 100%; border: none;">
+                    <input type="text" id="billTheatre" style="width: 100%; border: none;">
+                </div>
+                <div class="col">
+                    <h6>Drugs to bill:</h6>
+                    <textarea name="billDrugs" id="billDrugs" cols="64" rows="5" style="border: none;"></textarea>
+                </div>
+            </div>
+        </div>
     <div class="row bill container" style="background-color: whitesmoke">
         <h6><u>Add Bill Item</u></h6>
         <div class="col">
@@ -132,7 +150,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
             </div>
             <div>
                 <label for="quantity">Quantity</label>
-                <input type="number" id="quantity">
+                <input type="number" id="quantity" required>
             </div><br>
             <div>
                 <button class="btn btn-success" onclick="addItem()"><h6>+</h6></button>
@@ -160,7 +178,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
                 </div>
                 <div class="mobilePay">
                     <label for="mpesaRefrence">Refrence code</label>
-                    <input type="text" id="mpesaRefrence" name="mpesaRefrence">
+                    <input type="text" id="mpesaRefrence" name="mpesaRefrence" required>
                 </div>
                    
                 <div>
@@ -169,7 +187,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
                 </div>
                 <div>
                     <label for="amountTendered">Amount Tendered</label>
-                    <input type="number" id="amountTendered" oninput="calculateChange()">
+                    <input type="number" id="amountTendered" oninput="calculateChange()" required>
                 </div>
                 <div>
                     <label for="changeAmount">Change Amount</label>

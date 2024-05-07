@@ -59,52 +59,57 @@ addRowListeners();
         const sexx = document.getElementById('sexx').value;
         const residencee= document.getElementById('residencee').value;
 
-        const billItems={
-            pname : pname,
-            opdNo : opdNoo,
-            age : agee,
-            sex: sexx,
-            residence: residencee,
-            itemName: itemName,
-            billingDate: billDateTime,
-            scheme: scheme,
-            unitPrice: unitPrice,
-            quantity: quantity
-        };
-
-        var table = document.getElementById("billItems");
-        var row = table.insertRow(-1);
-
-        var cell0 = row.insertCell(0);
-        var cell1 = row.insertCell(1);
-        var cell2 = row.insertCell(2);
-        var cell3 = row.insertCell(3);
-        var cell4 = row.insertCell(4);
-        var cell5 = row.insertCell(5);
-        var cell6 = row.insertCell(6);
-
-        var netAmount = unitPrice * quantity;
-
-        cell0.innerHTML = '<input type="checkbox" onchange="calculateTotalAmount()">';
-        cell1.innerHTML = itemName;
-        cell2.innerHTML = billDateTime;
-        cell3.innerHTML = scheme;
-        cell4.innerHTML = unitPrice;
-        cell5.innerHTML = quantity;
-        cell6.innerHTML = netAmount.toFixed(2);
-
-        billRef.push(billItems);
-
-        // Clear input fields after adding item
-        document.getElementById("itemName").value = "";
-        document.getElementById("billDateTime").value = "";
-        document.getElementById("scheme").value = "";
-        document.getElementById("unitPrice").value = "";
-        document.getElementById("quantity").value = "";
-
-        // Display success message
-        document.getElementById("successMessage").innerText = "Bill item added successfully.";
-    }
+        if(quantity === ''){
+            alert("invalid bill item");
+        }
+        else{
+            const billItems={
+                pname : pname,
+                opdNo : opdNoo,
+                age : agee,
+                sex: sexx,
+                residence: residencee,
+                itemName: itemName,
+                billingDate: billDateTime,
+                scheme: scheme,
+                unitPrice: unitPrice,
+                quantity: quantity
+            };
+    
+            var table = document.getElementById("billItems");
+            var row = table.insertRow(-1);
+    
+            var cell0 = row.insertCell(0);
+            var cell1 = row.insertCell(1);
+            var cell2 = row.insertCell(2);
+            var cell3 = row.insertCell(3);
+            var cell4 = row.insertCell(4);
+            var cell5 = row.insertCell(5);
+            var cell6 = row.insertCell(6);
+    
+            var netAmount = unitPrice * quantity;
+    
+            cell0.innerHTML = '<input type="checkbox" onchange="calculateTotalAmount()">';
+            cell1.innerHTML = itemName;
+            cell2.innerHTML = billDateTime;
+            cell3.innerHTML = scheme;
+            cell4.innerHTML = unitPrice;
+            cell5.innerHTML = quantity;
+            cell6.innerHTML = netAmount.toFixed(2);
+    
+            billRef.push(billItems);
+    
+            // Clear input fields after adding item
+            document.getElementById("itemName").value = "";
+            document.getElementById("billDateTime").value = "";
+            document.getElementById("scheme").value = "";
+            document.getElementById("unitPrice").value = "";
+            document.getElementById("quantity").value = "";
+    
+            // Display success message
+            document.getElementById("successMessage").innerText = "Bill item added successfully.";
+        }
+        }
     function newBill(){
         document.getElementById("itemName").value = "";
         document.getElementById("billDateTime").value = "";

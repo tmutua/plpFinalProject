@@ -286,11 +286,22 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   var patientName= otherNames + ' ' + surname;
   var residence=document.getElementById('residence').value;
   var sex=document.getElementById('sex').value;
+  var dob=document.getElementById('dob').value;
+  // Calculate age from date of birth
+  var dobDate = new Date(dob);
+  var today = new Date();
+  var age = today.getFullYear() - dobDate.getFullYear();
+  var monthDiff = today.getMonth() - dobDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+    age--;
+  }
+  
 
   var patientDetails = {
     name: patientName,
     residence: residence,
-    sex: sex
+    sex: sex,
+    age: age
     
   };
 

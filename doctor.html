@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body style="background-color: rgb(209, 228, 234);" class="container">
     <div class="top-bar">
@@ -152,7 +153,6 @@
                 </div>
             </div>
             <div>
-                <a href="#" id="visitSummaryLink">Visit Summary</a>
                 <div id="visitSummary"></div>
             </div>
 
@@ -251,7 +251,7 @@
                     <div class="form-group">
                         <label for="drugNameInput">Drug Name:</label>
                         <input type="search" class="form-control" id="drugNameInput" onclick="showProductList()" >
-                        <select id="itemList" size="5"  onchange="selectProduct()" style="display: none; width: 100%;">
+                        <select id="itemListt" size="5"  onchange="selectProduct()" style="display: none; width: 100%;">
                             <!-- Product options will be populated here -->
                         </select>
                     </div>
@@ -329,6 +329,7 @@
                         <input type="text" class="form-control" id="purposeInput" placeholder="Enter purpose...">
                     </div>
                     <button type="button" class="btn btn-success">Schedule Appointment</button>
+                   
                 </div>
             </div>
         </div>
@@ -355,26 +356,26 @@ const productRef = database.ref('products');
 const serviceRef = database.ref('services');
 //const patientBio= database.ref('patients');
 
-function showProductList() {
-      const itemList = document.getElementById('itemList');
-      itemList.style.display = 'block';
-      productRef.once('value', function(snapshot) {
-        itemList.innerHTML = ''; // Clear previous results
-        snapshot.forEach(function(childSnapshot) {
-          const product = childSnapshot.val();
-          const option = document.createElement('option');
-          option.text = product.productName;
-          //option.value = product.unitPrice;
-          itemList.add(option);
-        });
-      });
-    }
+ function showProductList() {
+     const itemListt = document.getElementById('itemListt');
+     itemListt.style.display = 'block';
+    productRef.once('value', function(snapshot) {
+    itemListt.innerHTML = ''; // Clear previous results
+    snapshot.forEach(function(childSnapshot) {
+    const product = childSnapshot.val();
+    const option = document.createElement('option');
+    option.text = product.productName;
+                //option.value = product.unitPrice;
+    itemListt.add(option);
+    });
+    });
+ }
     function selectProduct() {
          // Clear item name
      document.getElementById('drugNameInput').value = '';
       const selectedProductName = document.getElementById('drugNameInput');
-      selectedProductName.value = document.getElementById('itemList').options[document.getElementById('itemList').selectedIndex].text;
-      document.getElementById('itemList').style.display = 'none';
+      selectedProductName.value = document.getElementById('itemListt').options[document.getElementById('itemListt').selectedIndex].text;
+      document.getElementById('itemListt').style.display = 'none';
     
     }
     // Function to show service list when lab request is clicked
@@ -446,13 +447,9 @@ function showProductList() {
       document.getElementById('theatreList').style.display = 'none';
     
     }
-
   // Add event listener to the form submission
   document.getElementById('patientTreatment').addEventListener('submit', function(event) {
     event.preventDefault();
-
-    // Get form data
-    const formData = new FormData(this);
 
     // Get data from outside inputs
     const pname = document.getElementById('pname').value;
@@ -460,87 +457,79 @@ function showProductList() {
     const agee = document.getElementById('agee').value;
     const sexx = document.getElementById('sexx').value;
     const residencee= document.getElementById('residencee').value;
-    /*
-    //Getting complaints
-var patientComplaint = document.getElementById('complaintList');
-var patientComplaints= [];
-var complaint= patientComplaint.getElementsByTagName('li');
-for (var i = 0; i < complaint.length; i++) {
-    patientComplaints.push(complaint[i].textContent.trim());
-}
-    //Getting allergies
-var patientAllergy = document.getElementById('allergiesList');
-var patientAllergies = [];
-var allergy= patientAllergy.getElementsByTagName('li');
-for (var i = 0; i < allergy.length; i++) {
-    patientAllergies.push(allergy[i].textContent.trim());
-} 
-    //Getting Impression
-var patientImpression = document.getElementById('impressionList');
-var patientImpressions = [];
-var impression=patientImpression.getElementsByTagName('li');
-for (var i = 0; i < impression.length; i++) {
-    patientImpressions.push(impression[i].textContent.trim());
-}
-    //Getting Diagnosis
-var patientDiagnosis = document.getElementById('diagnosisList');
-var patientdiagnosis = [];
-var diagnosis= patientDiagnosis.getElementsByTagName('li');
-for (var i = 0; i < diagnosis.length; i++) {
-    patientdiagnosis.push(diagnosis[i].textContent.trim());
-}
-*/
+    const presenting_history = document.getElementById('presenting_history').value;
+    const medical_history = document.getElementById('medical_history').value;
+    const surgical_history = document.getElementById('surgical_history').value;
+    const clinical_summary = document.getElementById('clinical_summary').value;
+
+    // Get data from lists
+    const complaintsList = document.getElementById('complaintsList').getElementsByTagName('li');
+    const allergiesList = document.getElementById('allergiesList').getElementsByTagName('li');
+    const impressionList = document.getElementById('impressionList').getElementsByTagName('li');
+    const diagnosisList = document.getElementById('diagnosisList').getElementsByTagName('li');
+
+    // Extract text content from lists
+    const complaints = Array.from(complaintsList).map(item => item.textContent.trim());
+    const allergies = Array.from(allergiesList).map(item => item.textContent.trim());
+    const impression = Array.from(impressionList).map(item => item.textContent.trim());
+    const diagnosis = Array.from(diagnosisList).map(item => item.textContent.trim());
+    
     // Getting labrequest
-var labTests = document.getElementById('labRequestList');
-var labrequest = [];
-var labTest= labTests.getElementsByTagName('li');
-for (var i = 0; i < labTest.length; i++) {
-    labrequest.push(labTest[i].textContent.trim());
-}
-//Getting Radiology request
-const radiology= document.getElementById('radiologyRequestList');
-var radiologyrequest =[];
-var radRequest=radiology.getElementsByTagName('li');
-for (var i = 0; i < radRequest.length; i++) {
-    radiologyrequest.push(radRequest[i].textContent.trim());
-}
-//Getting theatre request
-const theatre= document.getElementById('theatreRequestList');
-var theatrerequest =[];
-var operation=theatre.getElementsByTagName('li');
-for (var i = 0; i < operation.length; i++) {
-    theatrerequest.push(operation[i].textContent.trim());
-}
-//Getting prescription
-const prescription= document.getElementById('prescriptionDetails');
-var drugs =[];
-var drug=prescription.getElementsByTagName('li');
-for (var i = 0; i < drug.length; i++) {
-    drugs.push(drug[i].textContent.trim());
-}
+    var labTests = document.getElementById('labRequestList');
+    var labrequest = [];
+    var labTest= labTests.getElementsByTagName('li');
+    for (var i = 0; i < labTest.length; i++) {
+        labrequest.push(labTest[i].textContent.trim());
+    }
+    //Getting Radiology request
+    const radiology= document.getElementById('radiologyRequestList');
+    var radiologyrequest =[];
+    var radRequest=radiology.getElementsByTagName('li');
+    for (var i = 0; i < radRequest.length; i++) {
+        radiologyrequest.push(radRequest[i].textContent.trim());
+    }
+    //Getting theatre request
+    const theatre= document.getElementById('theatreRequestList');
+    var theatrerequest =[];
+    var operation=theatre.getElementsByTagName('li');
+    for (var i = 0; i < operation.length; i++) {
+        theatrerequest.push(operation[i].textContent.trim());
+    }
+    //Getting prescription
+    const prescription= document.getElementById('prescriptionDetails');
+    var drugs =[];
+    var drug=prescription.getElementsByTagName('li');
+    for (var i = 0; i < drug.length; i++) {
+        drugs.push(drug[i].textContent.trim());
+    }
+
+    // Create FormData object
+    const formData = new FormData();
 
     // Append data from outside inputs to form data
-    formData.append('pname', pname);
-    formData.append('opdNoo', opdNoo);
-    formData.append('agee', agee);
-    formData.append('sexx', sexx);
-    formData.append('residencee', residencee);
+    formData.append('name', pname);
+    formData.append('opdNo', opdNoo);
+    formData.append('age', agee);
+    formData.append('sex', sexx);
+    formData.append('residence', residencee);
     formData.append('labRequest', labrequest);
     formData.append('prescription', drugs);
     formData.append('radiologyRequest', radiologyrequest);
     formData.append('theatreRequest', theatrerequest);
-    /*
-    formData.append('complaints', patientComplaints);
-    formData.append('allergies', patientAllergies);
-    formData.append('impression', patientImpressions);
-    formData.append('diagnosis', patientdiagnosis);
-    */
-    // Convert form data to JSON object
+    formData.append('complaints', complaints.join('; '));
+    formData.append('allergies', allergies.join('; ')); 
+    formData.append('impression', impression.join('; ')); 
+    formData.append('diagnosis', diagnosis.join('; ')); 
+    formData.append('medical_history', medical_history);
+    formData.append('surgical_history', surgical_history);
+    formData.append('clinical_summary', clinical_summary);
+    formData.append('presenting_history', presenting_history);
+    //Convert form data to JSON object
     const formDataJson = {};
     formData.forEach((value, key) => {
       formDataJson[key] = value;
     });
-
+    
     // Save data to Firebase Realtime Database
     const treatmentRef = database.ref('treatment');
     treatmentRef.push(formDataJson)
@@ -557,8 +546,6 @@ for (var i = 0; i < drug.length; i++) {
     // Trigger form submission
     document.getElementById('patientTreatment').submit();
   });
-    
-
     </script>
 
     <script src="doctor.js"></script>
